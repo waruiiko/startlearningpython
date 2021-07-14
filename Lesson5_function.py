@@ -57,8 +57,48 @@ filter() 是一个高阶内置函数，接受函数和可迭代对象作为输�
 """
 cities = ["New York City", "Los Angeles", "Chicago", "Mountain View", "Denver", "Boston"]
 
-def is_short(name):
-    return len(name) < 10
+# # def is_short(name):
+# #     return len(name) < 10
 
-short_cities = list(filter(is_short, cities))
-print(short_cities)
+# # short_cities = list(filter(is_short, cities))
+# short_cities = list(filter(lambda name:len(name)<10,cities))
+# print(short_cities)
+
+"""练习：实现 my_enumerate
+请自己写一个效果和内置函数 enumerate 一样的生成器函数。
+
+如下所示地调用该函数：
+"""
+# lessons = ["Why Python Programming", "Data Types and Operators", "Control Flow", "Functions", "Scripting"]
+
+# for i, lesson in enumerate(lessons, 1):
+#     print("Lesson {}: {}".format(i, lesson))
+
+# lessons = ["Why Python Programming", "Data Types and Operators", "Control Flow", "Functions", "Scripting"]
+
+# def my_enumerate(iterable, start=0):
+#     # Implement your generator function here
+#     count = start
+#     for element in iterable:
+#         yield count,element
+#         count +=1
+
+
+# for i, lesson in my_enumerate(lessons, 1):
+#     print("Lesson {}: {}".format(i, lesson))
+
+
+"""练习：Chunker
+如果可迭代对象太大，无法完整地存储在内存中（例如处理大型文件时），每次能够使用一部分很有用。
+
+实现一个生成器函数 chunker，接受一个可迭代对象并每次生成指定大小的部分数据。
+
+如下所示地调用该函数：
+"""
+def chunker(iterable, size):
+    # Implement function here
+    for i in range(0,len(iterable),size):
+        yield iterable[i:i+size]
+
+for chunk in chunker(range(50), 10):
+    print(list(chunk))
