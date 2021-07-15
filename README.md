@@ -4,6 +4,6 @@
 
 https://classroom.udacity.com/courses/ud1110
 
-### 20210714 完成Lesson4 控制流Control Flow
+### 20210714 finish Lesson4 Control Flow
 
-### 20210714 完成Lesson5 函数function
+### 20210714 finish Lesson5 function
