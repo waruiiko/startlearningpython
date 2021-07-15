@@ -40,28 +40,28 @@
 
 请修改下面的函数以处理该异常。如果在函数的第一行遇到该异常，应该输出警告消息并返回空列表。否则，应该运行函数的剩余代码。最后，该函数应该始终输出返回了多少组。
 """
-def create_groups(items, num_groups):
-   try:
-    size = len(items) // num_groups
-   except ZeroDivisionError as e:
-      print("WARNING: Returning empty list. Please use a nonzero number!!!{}!!!.".format(e))
-      return []
-   else:
-    groups = []
-    for i in range(0, len(items), size):
-        groups.append(items[i:i + size])
-    return groups
-   finally:
-    print("{} groups returned.".format(num_groups))
+# def create_groups(items, num_groups):
+#    try:
+#     size = len(items) // num_groups
+#    except ZeroDivisionError as e:
+#       print("WARNING: Returning empty list. Please use a nonzero number!!!{}!!!.".format(e))
+#       return []
+#    else:
+#     groups = []
+#     for i in range(0, len(items), size):
+#         groups.append(items[i:i + size])
+#     return groups
+#    finally:
+#     print("{} groups returned.".format(num_groups))
     
 
-print("Creating 6 groups...")
-for group in create_groups(range(32), 6):
-    print(list(group))
+# print("Creating 6 groups...")
+# for group in create_groups(range(32), 6):
+#     print(list(group))
 
-print("\nCreating 0 groups...")
-for group in create_groups(range(32), 0):
-    print(list(group))
+# print("\nCreating 0 groups...")
+# for group in create_groups(range(32), 0):
+#     print(list(group))
 
 # def create_groups(items, num_groups):
 #     try:
@@ -112,3 +112,49 @@ with open('my_path/my_file.txt', 'r') as f:
     file_data = f.read()
 该 with 关键字使你能够打开文件，对文件执行操作，并在缩进代码（在此示例中是读取文件）执行之后自动关闭文件。现在，我们不需要调用 f.close() 了！你只能在此缩进块中访问文件对象 f。
 """
+
+# with open(camelot.txt) as song:
+#     print(song.read(2))
+#     print(song.read(8))
+#     print(song.read())
+
+# f = open('xiaoming.txt', 'r')
+# file_data = f.read()
+# # file_data = f.readline()
+# # file_data = f.readlines()
+# print(file_data)
+# f.close()
+
+"""很方便的是，Python 将使用语法 for line in file 循环访问文件中的各行内容。 我可以使用该语法创建列表中的行列表。因为每行依然包含换行符，因此我使用 .strip() 删掉换行符。
+
+camelot_lines = []
+with open("camelot.txt") as f:
+    for line in f:
+        camelot_lines.append(line.strip())
+
+print(camelot_lines)
+输出：
+
+["We're the knights of the round table", "We dance whenever we're able"]
+"""
+
+
+"""练习：《飞翔的马戏团》 演员名单
+你将创建一个演员名单，列出参演电视剧《巨蟒剧团之飞翔的马戏团》的演员。
+
+写一个叫做 create_cast_list 的函数，该函数会接受文件名作为输入，并返回演员姓名列表。 它将运行文件 flying_circus_cast.txt（信息收集自 imdb.com）。文件的每行包含演员姓名、逗号，以及关于节目角色的一些（凌乱）信息。你只需提取姓名，并添加到列表中。你可以使用 .split() 方法处理每行。
+"""
+def create_cast_list(filename):
+    cast_list = []
+    with open(filename) as f:
+        for line in f:
+            cast_list.append(line.split(",")[0])
+    #use with to open the file filename
+    #use the for loop syntax to process each line
+    #and add the actor name to cast_list
+
+    return cast_list
+
+cast_list = create_cast_list('flying_circus_cast.txt')
+for actor in cast_list:
+    print(actor)
