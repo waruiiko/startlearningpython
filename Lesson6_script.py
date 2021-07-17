@@ -144,17 +144,24 @@ print(camelot_lines)
 
 写一个叫做 create_cast_list 的函数，该函数会接受文件名作为输入，并返回演员姓名列表。 它将运行文件 flying_circus_cast.txt（信息收集自 imdb.com）。文件的每行包含演员姓名、逗号，以及关于节目角色的一些（凌乱）信息。你只需提取姓名，并添加到列表中。你可以使用 .split() 方法处理每行。
 """
-def create_cast_list(filename):
-    cast_list = []
-    with open(filename) as f:
-        for line in f:
-            cast_list.append(line.split(",")[0])
-    #use with to open the file filename
-    #use the for loop syntax to process each line
-    #and add the actor name to cast_list
+# def create_cast_list(filename):
+#     cast_list = []
+#     with open(filename) as f:
+#         for line in f:
+#             cast_list.append(line.split(",")[0])
+#     #use with to open the file filename
+#     #use the for loop syntax to process each line
+#     #and add the actor name to cast_list
 
-    return cast_list
+#     return cast_list
 
-cast_list = create_cast_list('flying_circus_cast.txt')
-for actor in cast_list:
-    print(actor)
+# cast_list = create_cast_list('flying_circus_cast.txt')
+# for actor in cast_list:
+#     print(actor)
+
+import math
+# x= math.exp(3)
+
+
+x= math.frexp(3)
+print(x)
