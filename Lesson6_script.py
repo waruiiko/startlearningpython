@@ -159,9 +159,38 @@ print(camelot_lines)
 # for actor in cast_list:
 #     print(actor)
 
-import math
-# x= math.exp(3)
+# import math
+# # x= math.exp(3)
 
 
-x= math.frexp(3)
-print(x)
+# x= math.frexp(3)
+# print(x)
+
+"""练习：密码生成器
+写一个叫做 generate_password 的函数，该函数会从提供的单词文件中随机选择三个单词，并将它们连接成一个字符串。我们已经在起始代码中提供了从文件中读取数据的代码，你需要利用这些部分构建一个密码。
+"""
+# TODO: First import the `random` module
+import random
+
+# We begin with an empty `word_list`
+word_file = "words.txt"
+word_list = []
+
+# We fill up the word_list from the `words.txt` file
+with open(word_file,'r') as words:
+	for line in words:
+		# remove white space and make everything lowercase
+		word = line.strip().lower()
+		# don't include words that are too long or too short
+		if 3 < len(word) < 8:
+			word_list.append(word)
+
+# TODO: Add your function generate_password below
+# It should return a string consisting of three random words 
+# concatenated together without spaces
+def generate_password():
+    
+
+
+# Now we test the function
+print(generate_password())
