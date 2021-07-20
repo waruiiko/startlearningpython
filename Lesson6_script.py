@@ -169,30 +169,97 @@ print(camelot_lines)
 """练习：密码生成器
 写一个叫做 generate_password 的函数，该函数会从提供的单词文件中随机选择三个单词，并将它们连接成一个字符串。我们已经在起始代码中提供了从文件中读取数据的代码，你需要利用这些部分构建一个密码。
 """
-# TODO: First import the `random` module
-import random
+# # TODO: First import the `random` module
+# import random
 
-# We begin with an empty `word_list`
-word_file = "words.txt"
-word_list = []
+# # We begin with an empty `word_list`
+# word_file = "words.txt"
+# word_list = []
 
-# We fill up the word_list from the `words.txt` file
-with open(word_file,'r') as words:
-    for line in words:
-		# remove white space and make everything lowercase
-        word = line.strip().lower()
-		# don't include words that are too long or too short
-        if 3 < len(word) < 8:
-            word_list.append(word)
+# # We fill up the word_list from the `words.txt` file
+# with open(word_file,'r') as words:
+#     for line in words:
+# 		# remove white space and make everything lowercase
+#         word = line.strip().lower()
+# 		# don't include words that are too long or too short
+#         if 3 < len(word) < 8:
+#             word_list.append(word)
 
-# TODO: Add your function generate_password below
-# It should return a string consisting of three random words 
-# concatenated together without spaces
-def generate_password():
-    return random.choice(word_list) + random.choice(word_list) + random.choice(word_list)
+# # TODO: Add your function generate_password below
+# # It should return a string consisting of three random words 
+# # concatenated together without spaces
+# def generate_password():
+#     return random.choice(word_list) + random.choice(word_list) + random.choice(word_list)
 	
     
 
 
-# Now we test the function
-print(generate_password())
+# # Now we test the function
+# print(generate_password())
+
+"""
+我们的推荐模块
+Python 标准库包含大量模块！为了帮助你熟悉那些实用的模块，我们在下面筛选了一些我们推荐的 Python 标准库模块并解释为何我们喜欢使用它们！
+
+csv：对于读取 csv 文件来说非常便利
+collections：常见数据类型的实用扩展，包括 OrderedDict、defaultdict 和 namedtuple
+random：生成假随机数字，随机打乱序列并选择随机项
+string：关于字符串的更多函数。此模块还包括实用的字母集合，例如 string.digits（包含所有字符都是有效数字的字符串）。
+re：通过正则表达式在字符串中进行模式匹配
+math：一些标准数学函数
+os：与操作系统交互
+os.path：os 的子模块，用于操纵路径名称
+sys：直接使用 Python 解释器
+json：适用于读写 json 文件（面向网络开发）
+希望你能用上这些模块！
+"""
+
+"""导入模块技巧
+还有一些在不同情形下很有用的其他形式的 import 语句。
+
+1.要从模块中导入单个函数或类：
+from module_name import object_name
+2.要从模块中导入多个单个对象：
+from module_name import first_object, second_object
+3.要重命名模块：
+import module_name as new_name
+4.要从模块中导入对象并重命名：
+from module_name import object_name as new_name
+5.要从模块中单个地导入所有对象（请勿这么做）：
+from module_name import *
+6.如果你真的想使用模块中的所有对象，请使用标准导入 module_name 语句并使用点记法访问每个对象。
+import module_name
+"""
+
+"""使用 requirements.txt 文件
+大型 Python 程序可能依赖于十几个第三方软件包。为了更轻松地分享这些程序，程序员经常会在叫做 requirements.txt 的文件中列出项目的依赖项。下面是一个 requirements.txt 文件示例。
+
+beautifulsoup4==4.5.1
+bs4==0.0.1
+pytz==2016.7
+requests==2.11.1
+该文件的每行包含软件包名称和版本号。版本号是可选项，但是通常都会包含。不同版本的库之间可能变化不大，可能截然不同，因此有必要使用程序作者在写程序时用到的库版本。
+
+你可以使用 pip 一次性安装项目的所有依赖项，方法是在命令行中输入 pip install -r requirements.txt。
+"""
+
+"""实用的第三方软件包
+能够安装并导入第三方库很有用，但是要成为优秀的程序员，还需要知道有哪些库可以使用。大家通常通过在线推荐或同事介绍了解实用的新库。如果你是一名 Python 编程新手，可能没有很多同事，因此为了帮助你了解入门信息，下面是优达学城工程师很喜欢使用的软件包列表。（可能部分网站在国内网络中无法打开）
+
+IPython - 更好的交互式 Python 解释器
+requests - 提供易于使用的方法来发出网络请求。适用于访问网络 API。
+Flask - 一个小型框架，用于构建网络应用和 API。
+Django - 一个功能更丰富的网络应用构建框架。Django 尤其适合设计复杂、内容丰富的网络应用。
+Beautiful Soup - 用于解析 HTML 并从中提取信息。适合网页数据抽取。
+pytest - 扩展了 Python 的内置断言，并且是最具单元性的模块。
+PyYAML - 用于读写 YAML 文件。
+NumPy - 用于使用 Python 进行科学计算的最基本软件包。它包含一个强大的 N 维数组对象和实用的线性代数功能等。
+pandas - 包含高性能、数据结构和数据分析工具的库。尤其是，pandas 提供 dataframe！
+matplotlib - 二维绘制库，会生成达到发布标准的高品质图片，并且采用各种硬拷贝格式和交互式环境。
+ggplot - 另一种二维绘制库，基于 R's ggplot2 库。
+Pillow - Python 图片库可以向你的 Python 解释器添加图片处理功能。
+pyglet - 专门面向游戏开发的跨平台应用框架。
+Pygame - 用于编写游戏的一系列 Python 模块。
+pytz - Python 的世界时区定义。
+
+"""
