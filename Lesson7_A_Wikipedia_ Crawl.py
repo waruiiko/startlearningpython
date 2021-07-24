@@ -70,10 +70,18 @@ while continue_crawl(article_chain, target_url):
 索引 [-1] 提供了 article_chain 列表中的最后一个条目，所以在下一行，将 first_link 添加到 article_chain 的末尾可起到一定作用 - 下一步将编写该代码！"
 """
 import requests
-# from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
 def find_first_link(url):
     response=requests.get(url)
     html=response.text
+    soup = BeautifulSoup(html,"html.parser")
+    
+    # TODO: find the first link in the article, or set to None if
+    # there is no link in the article.
+    article_link = "a url, or None"
+
+    if article_link:
+        return article_link
 
 import time
 def web_crawl():
