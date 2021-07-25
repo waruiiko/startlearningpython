@@ -23,26 +23,26 @@ search_history 是维基百科文章 url 的字符串列表。列表中的最后
 如果 target_url 是查找到结果，停止搜索时文章 url 的字符串。
 根据以下规则，continue_crawl 应该返回 True 或 False： 如果 search_history 中最近的文章是目标文章，则应停止搜索，函数应返回 False 如果列表中有 25 个 url，函数应返回 False 如果列表中有一个循环，函数应返回 False 否则应继续搜索，函数应返回 True。
 """
-import requests
-from bs4 import BeautifulSoup
+# import requests
+# from bs4 import BeautifulSoup
 
-def continue_crawl(search_history,target_url,max_steps=25):
-    if search_history[-1] == target_url:
-        print("We have found!")
-        return False
+# def continue_crawl(search_history,target_url,max_steps=25):
+#     if search_history[-1] == target_url:
+#         print("We have found!")
+#         return False
 
-    elif len(search_history) > max_steps:
-        print("The search has gone on suspiciously long, aborting search!")
-        return False
+#     elif len(search_history) > max_steps:
+#         print("The search has gone on suspiciously long, aborting search!")
+#         return False
     
-    elif search_history[-1] in search_history[:-1]:
-        print("We've arrived at an article we've already seen, aborting search!")
-        return False
+#     elif search_history[-1] in search_history[:-1]:
+#         print("We've arrived at an article we've already seen, aborting search!")
+#         return False
     
-    else:return True
+#     else:return True
     
-print("======")
-print(continue_crawl(['https://en.wikipedia.org/wiki/Floating_point'],'https://en.wikipedia.org/wiki/Philosophy'))
+# print("======")
+# print(continue_crawl(['https://en.wikipedia.org/wiki/Floating_point'],'https://en.wikipedia.org/wiki/Philosophy'))
 
 """这四个步骤可作为 while 循环构架中的注释。
 
@@ -71,17 +71,57 @@ while continue_crawl(article_chain, target_url):
 """
 import requests
 from bs4 import BeautifulSoup
+
+
+
+# response = requests.get('https://en.wikipedia.org/wiki/A._J._W._McNeilly')
+# response = requests.get('https://en.wikipedia.org/wiki/Oryzomys_dimidiatus')
+
+# html=response.text
+# print(html)
+# soup = BeautifulSoup(html,'html.parser')
+
+"""第一行代码查找到包含文章正文的 div。 如果该标签是 div 的子类，则下一行在 div 中循环每个<p>。我们从文档了解到，"如果想让 Beautiful Soup 只考虑直接子类，可以按照recursive=False进行传递" 。
+
+循环主体可以查看段落中是否存在 a 标签。如果这样，从链接中获取 url，并将其存储在 first_relative_link 中，然后结束循环。
+"""
+# content_div = soup.find(id='mw-content-text').find(class_='mw-parser-output')
+# for element in content_div.find_all("p", recursive=False):
+#     if element.find("a",recursive=False):
+#         # first_relative_link = element.a.get('href')
+#         first_relative_link = element.find("a",recursive=False).get('href')
+#         break
+# print(first_relative_link)
+
+# print(soup.find(id='mw-content-text').find(class_='mw-parser-output').p.a.get('href'))
+# print(soup.find(id='mw-content-text').find(class_='mw-parser-output').p.a.get('href'))
+
 def find_first_link(url):
     response=requests.get(url)
     html=response.text
     soup = BeautifulSoup(html,"html.parser")
     
     # TODO: find the first link in the article, or set to None if
+    content_div = soup.find(id='mw-content-text').find(class_='mw-parser-output')
+
+
     # there is no link in the article.
     article_link = "a url, or None"
 
-    if article_link:
-        return article_link
+    for element in content_div.find_all("p", recursive=False):
+        if element.find("a",recursive=False):
+        # first_relative_link = element.a.get('href')
+            first_relative_link = element.find("a",recursive=False).get('href')
+        break
+    print(first_relative_link)
+    
+    if not article_link:
+        return
+    
+    # Build a full url from the relative article_link url
+    first_link = urllib.parse.urljoin('https://en.wikipedia.org/', article_link)
+
+    return first_link
 
 import time
 def web_crawl():
@@ -92,3 +132,14 @@ def web_crawl():
         # add the first link to article chain
         # delay for about two seconds
         time.sleep(2)
+        
+"""习题 1/2
+在这些方法中，哪些可能有助于我们查找到想要的链接，而不是 mw-content-text div 标签较远后代标签的链接？选择所有看似相关的方法。
+
+find_all方法
+children方法
+
+可使用 children 方法查找直接后代。我们也可以使用 find_all 方法，并将 recursive 参数设置为 False，以便仅查找子类。
+"""
+
+
