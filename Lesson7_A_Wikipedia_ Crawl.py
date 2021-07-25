@@ -71,8 +71,11 @@ while continue_crawl(article_chain, target_url):
 """
 import requests
 from bs4 import BeautifulSoup
+import time
+import urllib
 
-
+start_url = "https://en.wikipedia.org/wiki/Special:Random"
+target_url = "https://en.wikipedia.org/wiki/Philosophy"
 
 # response = requests.get('https://en.wikipedia.org/wiki/A._J._W._McNeilly')
 # response = requests.get('https://en.wikipedia.org/wiki/Oryzomys_dimidiatus')
@@ -106,14 +109,14 @@ def find_first_link(url):
 
 
     # there is no link in the article.
-    article_link = "a url, or None"
+    article_link = None
 
     for element in content_div.find_all("p", recursive=False):
         if element.find("a",recursive=False):
         # first_relative_link = element.a.get('href')
-            first_relative_link = element.find("a",recursive=False).get('href')
-        break
-    print(first_relative_link)
+            article_link = element.find("a",recursive=False).get('href')
+            break
+    # print(article_link)
     
     if not article_link:
         return
@@ -123,16 +126,47 @@ def find_first_link(url):
 
     return first_link
 
-import time
-def web_crawl():
-    while continue_crawl(article_chain, target_url): 
-        # download html of last article in article_chain
-        # find the first link in that html
-        first_link = find_first_link(article_chain[-1])
-        # add the first link to article chain
-        # delay for about two seconds
-        time.sleep(2)
+# import time
+# def web_crawl():
+#     while continue_crawl(article_chain, target_url): 
+#         print(article_chain[-1])
+#         # download html of last article in article_chain
+#         # find the first link in that html
+#         first_link = find_first_link(article_chain[-1])
+#         # add the first link to article chain
+#         if not first_link:
+#             print("We've arrived at an article with no links, aborting search!")
+#         break
+#         article_chain.append(first_link)
+#         # delay for about two seconds
+#         time.sleep(2)
         
+def continue_crawl(search_history, target_url, max_steps=25):
+    if search_history[-1] == target_url:
+        print("We've found the target article!")
+        return False
+    elif len(search_history) > max_steps:
+        print("The search has gone on suspiciously long, aborting search!")
+        return False
+    elif search_history[-1] in search_history[:-1]:
+        print("We've arrived at an article we've already seen, aborting search!")
+        return False
+    else:
+        return True
+
+article_chain = [start_url]
+
+while continue_crawl(article_chain, target_url):
+    print(article_chain[-1])
+
+    first_link = find_first_link(article_chain[-1])
+    if not first_link:
+        print("We've arrived at an article with no links, aborting search!")
+        break
+
+    article_chain.append(first_link)
+
+    time.sleep(2) # Slow things down so as to not hammer Wikipedia's servers
 """习题 1/2
 在这些方法中，哪些可能有助于我们查找到想要的链接，而不是 mw-content-text div 标签较远后代标签的链接？选择所有看似相关的方法。
 
